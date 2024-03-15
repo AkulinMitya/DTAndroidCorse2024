@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">exercises03</string>
+    <string name="fab_icon">Create new habit</string>
+    <string name="habitName">Enter the name of the habit</string>
+    <string name="habitDescription">Enter description</string>
+    <string name="habitType1">Sport</string>
+    <string name="habitType2">Study</string>
+    <string name="habitType3">Music</string>
+    <string name="habitAmount">Enter amount of habit execution</string>
+    <string name="habitFrequency">Enter frequency of habit execution</string>
+    <string name="save">Save</string>
+    <string name="choose_color">Choose Color</string>
+
+</resources>

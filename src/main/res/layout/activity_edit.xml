@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".EditActivity">
+
+    <EditText
+        android:id="@+id/habitTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:autofillHints=""
+        android:hint="@string/habitName"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/habitDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/habitTitle"
+        android:layout_margin="16dp"
+        android:autofillHints=""
+        android:hint="@string/habitDescription"
+        android:inputType="text" />
+
+    <Spinner
+        android:id="@+id/spinnerPriority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/habitDescription"
+        android:layout_margin="16dp"
+        android:entries="@array/habitPriority" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/spinnerPriority"
+        android:layout_margin="16dp">
+
+        <RadioButton
+            android:id="@+id/radioButtonType1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#CD2D195A"
+            android:text="@string/habitType1" />
+
+        <RadioButton
+            android:id="@+id/radioButtonType2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#CD2D195A"
+            android:text="@string/habitType2" />
+
+        <RadioButton
+            android:id="@+id/radioButtonType3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="#CD2D195A"
+            android:text="@string/habitType3" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/radioGroupType"
+        android:autofillHints=""
+        android:hint="@string/habitAmount"
+        android:inputType="number">
+
+    </EditText>
+
+    <Spinner
+        android:id="@+id/frequency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/amount"
+        android:layout_margin="16dp"
+        android:entries="@array/frequencyTypes"
+        android:hint="@string/habitAmount">
+
+    </Spinner>
+
+    <Button
+        android:id="@+id/buttonChooseColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frequency"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#DADF830A"
+        android:text="@string/choose_color" />
+
+    <View
+        android:id="@+id/colorPreview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/buttonChooseColor"
+        android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/colorPreview"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="#6C0C7C"
+        android:text="@string/save" />
+
+</RelativeLayout>

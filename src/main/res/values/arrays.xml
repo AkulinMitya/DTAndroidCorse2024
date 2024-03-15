@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="habitPriority">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+        <item>Extreme</item>
+    </string-array>
+
+    <string-array name="frequencyTypes">
+        <item>times in a day</item>
+        <item>times in a week</item>
+        <item>times in a month</item>
+        <item>times in a year</item>
+    </string-array>
+</resources>
