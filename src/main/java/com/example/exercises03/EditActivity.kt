@@ -23,7 +23,7 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit)
         setupSaveButton()
-        restoreInstanceState(savedInstanceState)
+        restoreHabit(savedInstanceState)
         setupColorPicker()
         setColorPreviewBackground()
     }
@@ -35,7 +35,7 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
         }
     }
 
-    private fun restoreInstanceState(savedInstanceState: Bundle?) {
+    private fun restoreHabit(savedInstanceState: Bundle?) {
         savedInstanceState?.let {
             selectedColor = it.getInt("selectedColor", Color.BLACK)
         }
@@ -58,11 +58,11 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
 
         val spinnerPriority = findViewById<Spinner>(R.id.spinnerPriority)
         val priorityAdapter = spinnerPriority.adapter as ArrayAdapter<String>
-        val priorityIndex = priorityAdapter.getPosition(habit.priority)
+        val priorityIndex = priorityAdapter.getPosition(habit.priority.priorityName)
         spinnerPriority.setSelection(priorityIndex)
 
         val radioGroupType = findViewById<RadioGroup>(R.id.radioGroupType)
-        val typeRadioButtonId = when (habit.type) {
+        val typeRadioButtonId = when (habit.type.typeName) {
             resources.getString(R.string.habitType1) -> R.id.radioButtonType1
             resources.getString(R.string.habitType2) -> R.id.radioButtonType2
             resources.getString(R.string.habitType3) -> R.id.radioButtonType3
@@ -76,7 +76,7 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
 
         val spinnerFrequency = findViewById<Spinner>(R.id.frequency)
         val frequencyAdapter = spinnerFrequency.adapter as ArrayAdapter<String>
-        val frequencyIndex = frequencyAdapter.getPosition(habit.frequency)
+        val frequencyIndex = frequencyAdapter.getPosition(habit.frequency.freqName)
         spinnerFrequency.setSelection(frequencyIndex)
     }
 
@@ -95,18 +95,28 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
         val type = getTypeFromRadioGroup()
         val amount = findViewById<EditText>(R.id.amount).text.toString()
         val frequency = findViewById<Spinner>(R.id.frequency).selectedItem.toString()
-
-        val id = intent.getIntExtra("habitId", -1) as Int
+        val id = intent.getIntExtra("habitId", -1)
         return Habit(
             title = title,
             description = description,
-            priority = priority,
-            type = type,
+            priority = HabitPriority.valueOf(priority),
+            type = HabitType.valueOf(type),
             amount = amount,
-            frequency = frequency,
+            frequency = habitFrequencyFromString(frequency),
             color = selectedColor,
             id = id
         )
+    }
+
+    // Метод для преобразования текста в HabitFrequency
+    fun habitFrequencyFromString(text: String): HabitFrequency {
+        return when (text) {
+            "times in a day" -> HabitFrequency.DAY
+            "times in a week" -> HabitFrequency.WEEK
+            "times in a month" -> HabitFrequency.MONTH
+            "times in a year" -> HabitFrequency.YEAR
+            else -> throw IllegalArgumentException("Unknown frequency: $text")
+        }
     }
 
     private fun getTypeFromRadioGroup(): String {

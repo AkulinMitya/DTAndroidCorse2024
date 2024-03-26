@@ -2,20 +2,72 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="16dp">
 
     <View
         android:id="@+id/colorSquare"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_marginEnd="16dp"
         android:background="@color/black" />
 
+
     <TextView
-        android:id="@+id/habitNameTextView"
+        android:id="@+id/habitId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="21sp" />
+
+    <TextView
+        android:id="@+id/habitTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="21sp" />
+
+
+    <TextView
+        android:id="@+id/habitDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="21sp" />
+
+    <TextView
+        android:id="@+id/habitPriority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="21sp" />
+
+    <TextView
+        android:id="@+id/habitType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="21sp" />
+
+    <TextView
+        android:id="@+id/habitAmount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="21sp" />
+
+    <TextView
+        android:id="@+id/habitFrequency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/black"
+        android:textSize="21sp" />
 
 </LinearLayout>

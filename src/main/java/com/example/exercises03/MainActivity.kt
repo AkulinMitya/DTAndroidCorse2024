@@ -1,5 +1,6 @@
 package com.example.exercises03
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,11 +9,13 @@ import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TextView
 import androidx.activity.ComponentActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : ComponentActivity() {
     private val habits = ArrayList<Habit>()
-    private lateinit var adapter: ArrayAdapter<Habit>
+    private lateinit var adapter: HabitAdapter
 
     companion object {
         private const val REQUEST_CODE_ADD_HABIT = 111
@@ -20,6 +23,7 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        //TODO findViewById заменить
         super.onCreate(savedInstanceState)
         setContentView(R.layout.layout)
         setupListView()
@@ -27,11 +31,11 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun setupListView() {
-        val habitsView = findViewById<ListView>(R.id.habitsView)
+        val habitsView = findViewById<RecyclerView>(R.id.habitsView)
         adapter = HabitAdapter(this, habits)
+        habitsView.layoutManager = LinearLayoutManager(this)
         habitsView.adapter = adapter
-
-        habitsView.setOnItemClickListener { _, _, position, _ ->
+        adapter.setOnItemClickListener { position ->
             editHabit(position)
         }
     }
@@ -61,6 +65,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun handleAddHabitResult(resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
             val habit = data?.getSerializableExtra("habit") as? Habit
@@ -71,13 +76,13 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun handleEditHabitResult(resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
             val editedHabit = data?.getSerializableExtra("habit") as? Habit
 
             editedHabit?.let { editedHabit ->
                 val index = habits.indexOfFirst { it.id == editedHabit.id }
-                Log.i("test", "in main activity index is $index")
                 if (index != -1) {
                     habits[index] = editedHabit
                     adapter.notifyDataSetChanged()

@@ -6,14 +6,10 @@ class Habit(
     val id: Int,
     val title: String,
     val description: String,
-    val priority: String,
-    val type: String,
+    val priority: HabitPriority,
+    val type: HabitType,
     val amount: String,
-    val frequency: String,
+    val frequency: HabitFrequency,
     val color: Int,
 ) : Serializable {
-    override fun toString(): String {
-        return "$title\n$description\nPriority: $priority\nType:" +
-                " $type\nFrequency: $amount $frequency\nColor: $color"
-    }
 }

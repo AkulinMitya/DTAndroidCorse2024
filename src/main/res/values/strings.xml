@@ -9,6 +9,10 @@
     <string name="habitAmount">Enter amount of habit execution</string>
     <string name="habitFrequency">Enter frequency of habit execution</string>
     <string name="save">Save</string>
+    <string name="freq_day">times in a day</string>
+    <string name="freq_week">times in a week</string>
+    <string name="freq_month">times in a month</string>
+    <string name="freq_year">times in a year</string>
     <string name="choose_color">Choose Color</string>
 
 </resources>
