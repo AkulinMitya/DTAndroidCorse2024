@@ -4,18 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ListView
-import android.widget.TextView
+
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.example.exercises03.databinding.LayoutBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : ComponentActivity() {
     private val habits = ArrayList<Habit>()
     private lateinit var adapter: HabitAdapter
+    private lateinit var binding: LayoutBinding
 
     companion object {
         private const val REQUEST_CODE_ADD_HABIT = 111
@@ -23,15 +21,15 @@ class MainActivity : ComponentActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //TODO findViewById заменить
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout)
+        binding = LayoutBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupListView()
         setupFab()
     }
 
     private fun setupListView() {
-        val habitsView = findViewById<RecyclerView>(R.id.habitsView)
+        val habitsView = binding.habitsView
         adapter = HabitAdapter(this, habits)
         habitsView.layoutManager = LinearLayoutManager(this)
         habitsView.adapter = adapter
@@ -49,7 +47,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun setupFab() {
-        val fab: FloatingActionButton = findViewById(R.id.fab)
+        val fab: FloatingActionButton = binding.fab
         fab.setOnClickListener {
             val intent = Intent(this@MainActivity, EditActivity::class.java)
             intent.putExtra("habitId", habits.size)
@@ -57,6 +55,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {

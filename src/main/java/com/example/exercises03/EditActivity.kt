@@ -5,23 +5,20 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioGroup
-import android.widget.Spinner
+import com.example.exercises03.databinding.ActivityEditBinding
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 
 
 class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
-
+    private lateinit var binding : ActivityEditBinding
     private var selectedColor = Color.BLACK
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit)
+        binding = ActivityEditBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         setupSaveButton()
         restoreHabit(savedInstanceState)
         setupColorPicker()
@@ -30,7 +27,7 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
 
 
     private fun setupColorPicker() {
-        findViewById<Button>(R.id.buttonChooseColor).setOnClickListener {
+        binding.buttonChooseColor.setOnClickListener {
             showColorPickerDialog()
         }
     }
@@ -48,20 +45,20 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
     }
 
     private fun setColorPreviewBackground() {
-        val colorPreview = findViewById<View>(R.id.colorPreview)
+        val colorPreview = binding.colorPreview
         colorPreview.setBackgroundColor(selectedColor)
     }
 
     private fun populateFields(habit: Habit) {
-        findViewById<EditText>(R.id.habitTitle).setText(habit.title)
-        findViewById<EditText>(R.id.habitDescription).setText(habit.description)
+        binding.habitTitle.setText(habit.title)
+        binding.habitDescription.setText(habit.description)
 
-        val spinnerPriority = findViewById<Spinner>(R.id.spinnerPriority)
+        val spinnerPriority = binding.spinnerPriority
         val priorityAdapter = spinnerPriority.adapter as ArrayAdapter<String>
         val priorityIndex = priorityAdapter.getPosition(habit.priority.priorityName)
         spinnerPriority.setSelection(priorityIndex)
 
-        val radioGroupType = findViewById<RadioGroup>(R.id.radioGroupType)
+        val radioGroupType = binding.radioGroupType
         val typeRadioButtonId = when (habit.type.typeName) {
             resources.getString(R.string.habitType1) -> R.id.radioButtonType1
             resources.getString(R.string.habitType2) -> R.id.radioButtonType2
@@ -72,16 +69,16 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
             radioGroupType.check(typeRadioButtonId)
         }
 
-        findViewById<EditText>(R.id.amount).setText(habit.amount)
+        binding.amount.setText(habit.amount)
 
-        val spinnerFrequency = findViewById<Spinner>(R.id.frequency)
+        val spinnerFrequency = binding.frequency
         val frequencyAdapter = spinnerFrequency.adapter as ArrayAdapter<String>
         val frequencyIndex = frequencyAdapter.getPosition(habit.frequency.freqName)
         spinnerFrequency.setSelection(frequencyIndex)
     }
 
     private fun setupSaveButton() {
-        val saveButton = findViewById<Button>(R.id.saveButton)
+        val saveButton = binding.saveButton
         saveButton.setOnClickListener {
             val habit = createHabitFromInputs()
             sendHabitResultBack(habit)
@@ -89,12 +86,12 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
     }
 
     private fun createHabitFromInputs(): Habit {
-        val title = findViewById<EditText>(R.id.habitTitle).text.toString()
-        val description = findViewById<EditText>(R.id.habitDescription).text.toString()
-        val priority = findViewById<Spinner>(R.id.spinnerPriority).selectedItem.toString()
+        val title = binding.habitTitle.text.toString()
+        val description = binding.habitDescription.text.toString()
+        val priority = binding.spinnerPriority.selectedItem.toString()
         val type = getTypeFromRadioGroup()
-        val amount = findViewById<EditText>(R.id.amount).text.toString()
-        val frequency = findViewById<Spinner>(R.id.frequency).selectedItem.toString()
+        val amount = binding.amount.text.toString()
+        val frequency = binding.frequency.selectedItem.toString()
         val id = intent.getIntExtra("habitId", -1)
         return Habit(
             title = title,
@@ -110,10 +107,11 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
 
 
     private fun getTypeFromRadioGroup(): String {
-        return when (findViewById<RadioGroup>(R.id.radioGroupType).checkedRadioButtonId) {
-            R.id.radioButtonType1 -> resources.getString(R.string.habitType1)
-            R.id.radioButtonType2 -> resources.getString(R.string.habitType2)
-            R.id.radioButtonType3 -> resources.getString(R.string.habitType3)
+        return when (binding.radioGroupType.checkedRadioButtonId) {
+            // Обращение к R.string.habitType тоже сделать через viewBinding?
+            binding.radioButtonType1.id -> resources.getString(R.string.habitType1)
+            binding.radioButtonType2.id -> resources.getString(R.string.habitType2)
+            binding.radioButtonType3.id -> resources.getString(R.string.habitType3)
             else -> ""
         }
     }
@@ -145,7 +143,7 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
 
     override fun onColorSelected(dialogId: Int, color: Int) {
         selectedColor = color
-        val colorPreview = findViewById<View>(R.id.colorPreview)
+        val colorPreview = binding.colorPreview
         colorPreview.setBackgroundColor(color)
     }
 

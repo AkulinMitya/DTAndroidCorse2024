@@ -6,20 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.exercises03.databinding.ListItemHabitBinding
 
 
 class HabitAdapter(private val context: Context, private var habits: List<Habit>) :
     RecyclerView.Adapter<HabitAdapter.ViewHolder>() {
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val colorSquare: View = itemView.findViewById(R.id.colorSquare)
-        val habitId: TextView = itemView.findViewById(R.id.habitId)
-        val habitTitle: TextView = itemView.findViewById(R.id.habitTitle)
-        val habitDescription: TextView = itemView.findViewById(R.id.habitDescription)
-        val habitPriority: TextView = itemView.findViewById(R.id.habitPriority)
-        val habitType: TextView = itemView.findViewById(R.id.habitType)
-        val habitAmount: TextView = itemView.findViewById(R.id.habitAmount)
-        val habitFrequency: TextView = itemView.findViewById(R.id.habitFrequency)
+        private val binding: ListItemHabitBinding = ListItemHabitBinding.bind(itemView)
+        val colorSquare: View = binding.colorSquare
+        val habitId: TextView = binding.habitId
+        val habitTitle: TextView = binding.habitTitle
+        val habitDescription: TextView = binding.habitDescription
+        val habitPriority: TextView = binding.habitPriority
+        val habitType: TextView = binding.habitType
+        val habitAmount: TextView = binding.habitAmount
+        val habitFrequency: TextView = binding.habitFrequency
 
     }
 
