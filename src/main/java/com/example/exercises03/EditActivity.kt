@@ -99,25 +99,15 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
         return Habit(
             title = title,
             description = description,
-            priority = HabitPriority.valueOf(priority),
-            type = HabitType.valueOf(type),
+            priority = HabitPriority.habitPriorityFromString(priority),
+            type = HabitType.habitTypeFromString(type),
             amount = amount,
-            frequency = habitFrequencyFromString(frequency),
+            frequency = HabitFrequency.habitFrequencyFromString(frequency),
             color = selectedColor,
             id = id
         )
     }
 
-    // Метод для преобразования текста в HabitFrequency
-    fun habitFrequencyFromString(text: String): HabitFrequency {
-        return when (text) {
-            "times in a day" -> HabitFrequency.DAY
-            "times in a week" -> HabitFrequency.WEEK
-            "times in a month" -> HabitFrequency.MONTH
-            "times in a year" -> HabitFrequency.YEAR
-            else -> throw IllegalArgumentException("Unknown frequency: $text")
-        }
-    }
 
     private fun getTypeFromRadioGroup(): String {
         return when (findViewById<RadioGroup>(R.id.radioGroupType).checkedRadioButtonId) {
