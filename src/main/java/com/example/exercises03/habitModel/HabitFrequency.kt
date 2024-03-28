@@ -1,4 +1,4 @@
-package com.example.exercises03
+package com.example.exercises03.habitModel
 
 enum class HabitFrequency(val freqName: String) {
     DAY("times in a day"),

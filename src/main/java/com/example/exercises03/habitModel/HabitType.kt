@@ -1,4 +1,4 @@
-package com.example.exercises03
+package com.example.exercises03.habitModel
 
 enum class HabitType(val typeName: String) {
     Sport("Sport"),

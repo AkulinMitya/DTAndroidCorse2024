@@ -1,30 +1,46 @@
-package com.example.exercises03
+package com.example.exercises03.mainActivity.fragments
 
-import android.content.Intent
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import com.example.exercises03.databinding.ActivityEditBinding
+import androidx.fragment.app.Fragment
+import com.example.exercises03.MAIN
+import com.example.exercises03.R
+import com.example.exercises03.databinding.EditFragmentLayoutBinding
+import com.example.exercises03.habitModel.Habit
+import com.example.exercises03.habitModel.HabitFrequency
+import com.example.exercises03.habitModel.HabitPriority
+import com.example.exercises03.habitModel.HabitType
 import com.jaredrummler.android.colorpicker.ColorPickerDialog
 import com.jaredrummler.android.colorpicker.ColorPickerDialogListener
 
+class EditHabitFragment : Fragment(), ColorPickerDialogListener {
 
-class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
-    private lateinit var binding : ActivityEditBinding
+    private lateinit var binding: EditFragmentLayoutBinding
     private var selectedColor = Color.BLACK
+    private var actionCode: Int = -1
+    private var id = -1
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityEditBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = EditFragmentLayoutBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         setupSaveButton()
         restoreHabit(savedInstanceState)
         setupColorPicker()
         setColorPreviewBackground()
     }
-
 
     private fun setupColorPicker() {
         binding.buttonChooseColor.setOnClickListener {
@@ -37,7 +53,11 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
             selectedColor = it.getInt("selectedColor", Color.BLACK)
         }
 
-        val habitToEdit = intent.getSerializableExtra("habitToEdit") as? Habit
+        val habitToEdit = arguments?.getSerializable("habit") as? Habit
+        actionCode = arguments?.getInt("actionCode") ?: -1
+        id = arguments?.getInt("habitIndex") as Int
+        Log.i("test", id.toString())
+
         habitToEdit?.let {
             populateFields(it)
             selectedColor = it.color
@@ -45,19 +65,16 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
     }
 
     private fun setColorPreviewBackground() {
-        val colorPreview = binding.colorPreview
-        colorPreview.setBackgroundColor(selectedColor)
+        binding.colorPreview.setBackgroundColor(selectedColor)
     }
 
     private fun populateFields(habit: Habit) {
         binding.habitTitle.setText(habit.title)
         binding.habitDescription.setText(habit.description)
-
         val spinnerPriority = binding.spinnerPriority
         val priorityAdapter = spinnerPriority.adapter as ArrayAdapter<String>
         val priorityIndex = priorityAdapter.getPosition(habit.priority.priorityName)
         spinnerPriority.setSelection(priorityIndex)
-
         val radioGroupType = binding.radioGroupType
         val typeRadioButtonId = when (habit.type.typeName) {
             resources.getString(R.string.habitType1) -> R.id.radioButtonType1
@@ -92,7 +109,7 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
         val type = getTypeFromRadioGroup()
         val amount = binding.amount.text.toString()
         val frequency = binding.frequency.selectedItem.toString()
-        val id = intent.getIntExtra("habitId", -1)
+        val id = id
         return Habit(
             title = title,
             description = description,
@@ -105,7 +122,6 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
         )
     }
 
-
     private fun getTypeFromRadioGroup(): String {
         return when (binding.radioGroupType.checkedRadioButtonId) {
             // Обращение к R.string.habitType тоже сделать через viewBinding?
@@ -117,10 +133,13 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
     }
 
     private fun sendHabitResultBack(habit: Habit) {
-        val resultIntent = Intent()
-        resultIntent.putExtra("habit", habit)
-        setResult(RESULT_OK, resultIntent)
-        finish()
+        val bundle = Bundle().apply {
+            putSerializable("habit", habit)
+            putInt("actionCode", actionCode)
+            putInt("habitIndex", id)
+            putBundle("habitBundle", this)
+        }
+        MAIN.navController.navigate(R.id.action_editHabitFragment_to_habitListFragment, bundle)
     }
 
     private fun showColorPickerDialog() {
@@ -133,18 +152,12 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
             .setPresets(intArrayOf(Color.RED, Color.GREEN, Color.BLUE))
             .create()
 
-        colorPickerDialog.show(supportFragmentManager, "color_picker_dialog")
-    }
-
-
-    companion object {
-        private const val DIALOG_COLOR_PICKER_ID = 0
+        colorPickerDialog.show(childFragmentManager, "color_picker_dialog")
     }
 
     override fun onColorSelected(dialogId: Int, color: Int) {
         selectedColor = color
-        val colorPreview = binding.colorPreview
-        colorPreview.setBackgroundColor(color)
+        setColorPreviewBackground()
     }
 
     override fun onDialogDismissed(dialogId: Int) {}
@@ -152,5 +165,9 @@ class EditActivity : AppCompatActivity(), ColorPickerDialogListener {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt("selectedColor", selectedColor)
+    }
+
+    companion object {
+        private const val DIALOG_COLOR_PICKER_ID = 0
     }
 }

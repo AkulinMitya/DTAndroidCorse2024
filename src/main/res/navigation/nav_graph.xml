@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/habitListFragment">
+
+    <fragment
+        android:id="@+id/editHabitFragment"
+        android:name="com.example.exercises03.mainActivity.fragments.EditHabitFragment"
+        android:label="EditHabitFragment" >
+        <action
+            android:id="@+id/action_editHabitFragment_to_habitListFragment"
+            app:destination="@id/habitListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/habitListFragment"
+        android:name="com.example.exercises03.mainActivity.fragments.HabitListFragment"
+        android:label="HabitListFragment" >
+        <action
+            android:id="@+id/action_habitListFragment_to_editHabitFragment"
+            app:destination="@id/editHabitFragment" />
+    </fragment>
+</navigation>

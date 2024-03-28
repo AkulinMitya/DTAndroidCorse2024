@@ -1,4 +1,4 @@
-package com.example.exercises03
+package com.example.exercises03.mainActivity
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.exercises03.R
 import com.example.exercises03.databinding.ListItemHabitBinding
+import com.example.exercises03.habitModel.Habit
 
 
 class HabitAdapter(private val context: Context, private var habits: List<Habit>) :
