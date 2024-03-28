@@ -49,14 +49,9 @@ class EditHabitFragment : Fragment(), ColorPickerDialogListener {
     }
 
     private fun restoreHabit(savedInstanceState: Bundle?) {
-        savedInstanceState?.let {
-            selectedColor = it.getInt("selectedColor", Color.BLACK)
-        }
-
         val habitToEdit = arguments?.getSerializable("habit") as? Habit
         actionCode = arguments?.getInt("actionCode") ?: -1
         id = arguments?.getInt("habitIndex") as Int
-        Log.i("test", id.toString())
 
         habitToEdit?.let {
             populateFields(it)
@@ -147,7 +142,6 @@ class EditHabitFragment : Fragment(), ColorPickerDialogListener {
             .setDialogType(ColorPickerDialog.TYPE_PRESETS)
             .setAllowCustom(true)
             .setShowAlphaSlider(true)
-            .setDialogId(DIALOG_COLOR_PICKER_ID)
             .setColor(selectedColor)
             .setPresets(intArrayOf(Color.RED, Color.GREEN, Color.BLUE))
             .create()
@@ -162,12 +156,5 @@ class EditHabitFragment : Fragment(), ColorPickerDialogListener {
 
     override fun onDialogDismissed(dialogId: Int) {}
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("selectedColor", selectedColor)
-    }
 
-    companion object {
-        private const val DIALOG_COLOR_PICKER_ID = 0
-    }
 }
