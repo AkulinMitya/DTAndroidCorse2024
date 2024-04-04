@@ -54,12 +54,6 @@
             android:buttonTint="#CD2D195A"
             android:text="@string/habitType2" />
 
-        <RadioButton
-            android:id="@+id/radioButtonType3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="#CD2D195A"
-            android:text="@string/habitType3" />
 
     </RadioGroup>
 

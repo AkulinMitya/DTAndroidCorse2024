@@ -74,7 +74,6 @@ class EditHabitFragment : Fragment(), ColorPickerDialogListener {
         val typeRadioButtonId = when (habit.type.typeName) {
             resources.getString(R.string.habitType1) -> R.id.radioButtonType1
             resources.getString(R.string.habitType2) -> R.id.radioButtonType2
-            resources.getString(R.string.habitType3) -> R.id.radioButtonType3
             else -> -1
         }
         if (typeRadioButtonId != -1) {
@@ -122,7 +121,6 @@ class EditHabitFragment : Fragment(), ColorPickerDialogListener {
             // Обращение к R.string.habitType тоже сделать через viewBinding?
             binding.radioButtonType1.id -> resources.getString(R.string.habitType1)
             binding.radioButtonType2.id -> resources.getString(R.string.habitType2)
-            binding.radioButtonType3.id -> resources.getString(R.string.habitType3)
             else -> ""
         }
     }

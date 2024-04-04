@@ -81,6 +81,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener {
         }
     }
 
+    // Нужно ли использовать?
 //    override fun onBackPressed() {
 //        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
 //            drawerLayout.closeDrawer(GravityCompat.START)
