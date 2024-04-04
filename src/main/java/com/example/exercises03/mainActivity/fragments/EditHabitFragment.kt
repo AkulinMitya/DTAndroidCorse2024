@@ -51,7 +51,7 @@ class EditHabitFragment : Fragment(), ColorPickerDialogListener {
     private fun restoreHabit(savedInstanceState: Bundle?) {
         val habitToEdit = arguments?.getSerializable("habit") as? Habit
         actionCode = arguments?.getInt("actionCode") ?: -1
-        id = arguments?.getInt("habitIndex") as Int
+        id = arguments?.getInt("habitId") as Int
 
         habitToEdit?.let {
             populateFields(it)

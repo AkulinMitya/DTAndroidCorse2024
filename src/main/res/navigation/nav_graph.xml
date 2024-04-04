@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/habitListFragment">
 
@@ -11,6 +12,9 @@
         <action
             android:id="@+id/action_editHabitFragment_to_habitListFragment"
             app:destination="@id/habitListFragment" />
+        <action
+            android:id="@+id/action_editHabitFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
     </fragment>
     <fragment
         android:id="@+id/habitListFragment"
@@ -18,6 +22,20 @@
         android:label="HabitListFragment" >
         <action
             android:id="@+id/action_habitListFragment_to_editHabitFragment"
+            app:destination="@id/editHabitFragment" />
+        <action
+            android:id="@+id/action_habitListFragment_to_infoFragment"
+            app:destination="@id/infoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/infoFragment"
+        android:name="com.example.exercises03.mainActivity.fragments.navDrawerFragments.InfoFragment"
+        android:label="InfoFragment" >
+        <action
+            android:id="@+id/action_infoFragment_to_habitListFragment2"
+            app:destination="@id/habitListFragment" />
+        <action
+            android:id="@+id/action_infoFragment_to_editHabitFragment2"
             app:destination="@id/editHabitFragment" />
     </fragment>
 </navigation>
